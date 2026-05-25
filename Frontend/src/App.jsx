@@ -13,10 +13,14 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 
+//Components
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 function App() {
   return (
     <Router>
-      {/* INTE GLÖMMA NAVBAR */}
+      <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
@@ -27,6 +31,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/account" element={<AccountPage />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
