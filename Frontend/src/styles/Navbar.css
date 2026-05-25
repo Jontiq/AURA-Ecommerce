@@ -1,0 +1,188 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  height: var(--navbar-height);
+  padding: 0 48px; /* Samma som footer, verkar knas annars?*/
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-light);
+  gap: 32px;
+}
+
+/* VÄNSTER */
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0; /* Krymper inte när sökfältet tar plats */
+}
+
+.navbar__logo {
+  font-family: var(--font-logo);
+  font-size: 1.5rem; /*1rem = 16px*/
+  font-weight: 700;
+  color: var(--color-black);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+
+.navbar__link {
+  font-size: 0.9rem;
+  color: var(--color-black);
+  text-decoration: none; /*Annars understruken*/
+  white-space: nowrap;
+}
+
+/* MITTEN – sökfältet växer och tar all tillgänglig plats */
+.navbar__center {
+  flex: 1;
+}
+
+.navbar__search {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 24px;
+  font-size: 0.9rem;
+  outline: none;
+  background-color: var(--color-white);
+  font-family: var(--font-body);
+}
+
+.navbar__search:focus {
+  border-color: var(--color-black); /* visar användaren att de är i search fältet genom att ändra färgen på border, TILLGÄNGLIGHET!*/
+}
+
+/* HÖGER */
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 4px; /*testar 4, var 8*/
+  flex-shrink: 0; /*Tillåter ej elementet att krympa*/
+}
+
+.navbar__icon {
+  /* Minst 44x44px tryckbar yta, tillgänglighet */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  color: var(--color-black);
+  text-decoration: none;
+  position: relative; /* Behövs för badge-positionering, dvs är relativ till ikonen (parent) */
+}
+
+.navbar__badge {
+  position: absolute;
+  top: 6px; /*hittas då med hjälp av den relativa positionen i föräldern, navbar__icon*/
+  right: 4px; /*testar 4, var 6*/
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hamburgare – dold på desktop, synlig på mobil */
+.navbar__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-black);
+  /* 44x44px touch target */
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  align-items: center;
+  justify-content: center;
+  padding:0;
+}
+
+/* Account-ikon – dold på mobil */
+.desktop-only {
+  display: flex;
+}
+
+/* Dropdown-menyn */
+.navbar__dropdown {
+  display: none; /* Visas via media query nedan */
+}
+
+/* ================================
+   MOBIL – max 768px
+   ================================ */
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 0px;
+  }
+
+.navbar__hamburger {
+    display: flex;
+    order: 1; /* Hamburger längst till vänster */
+    flex:1; /*Tar 1/3 av bredden*/
+    justify-content: flex-start;
+  }
+
+  /* hamburger VÄNSTER, logo MITTEN, cart HÖGER * */
+  .navbar__left {
+    flex: 1;
+    justify-content: center;
+    order: 2;/* Logo hamnar i mitten, missades*/
+  }
+
+  .navbar__right {
+    order: 3;/* Cart längst till höger */
+    flex: 1;
+    justify-content: flex-end; /*Cart trycks till höger*/
+  }
+
+  .navbar__link {
+    display: none; /* "Discover Collection" dold på mobil */
+  }
+
+  /* Account-ikon dold på mobil (finns i dropdown istället) */
+  .desktop-only {
+    display: none; /*Gömmer allt som är desktop only*/
+  }
+
+   /* sökfältet centrerat i full bredd på rad 2 */
+  .navbar__center {
+    order: 4;
+    width: 100%;
+    padding: 8px 0 4px;/* Ingen sidopadding, ärver från navbar */
+    flex: none;
+  }
+
+  /* Dropdown tar hela bredden under navbar */
+  .navbar__dropdown {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    order: 5;
+    border-top: 1px solid var(--color-gray-light);
+    padding: 4px 0; /*testar 4, var 8*/
+  }
+
+  .navbar__dropdown-link {
+    padding: 0px 16px;
+    color: var(--color-black);
+    text-decoration: none;
+    font-size: 0.95rem;
+    /* 44px touch target höjd */
+    min-height: var(--touch-target);
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar__dropdown-link:hover {
+    background-color: var(--color-bg-off-white);
+  }
+}

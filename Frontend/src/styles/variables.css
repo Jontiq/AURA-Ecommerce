@@ -1,0 +1,25 @@
+/* Globala designvariabler */
+
+:root {
+  /* ── Bakgrundsfärger ── */
+  --color-bg-off-white: #FAFAFA;   /* Sidans bakgrund */
+  --color-white: #FFFFFF;           /* Kort, navbar osv */
+
+  /* ── Neutrala färger ── */
+  --color-black: #262626;           /* Primär text, knappar */
+  --color-gray-mid: #737373;        /* Sekundär text, placeholders */
+  --color-gray-light: #D4D4D4;      /* Borders, separatorer */
+
+  /* ── Accent-färger ── */
+  --color-red: #DC2626;             /* Ta bort, felmeddelanden */
+  --color-green: #7FC88B;           /* Swish-markering, success */
+  --color-green-light: #F2FEF4;     /* Swish-kortets bakgrund */
+
+  /* ── Typografi ── */
+  --font-logo: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Layout ── */
+  --navbar-height: 64px;
+  --touch-target: 44px;
+}

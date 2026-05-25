@@ -40,23 +40,33 @@ const Footer = () => {
     <footer className="footer">
       {/* ÖVRE DEL – Logo + sociala medier */}
       <div className="footer__top">
-        <span className="footer__logo">AURA</span>
-        <div className="footer__socials">
-          {/* Platshållare tills  lägger till riktiga ikoner */}
-          <a href="#"><LinkedInIcon/></a>
-          <a href="#"><InstagramIcon /></a>
-          <a href="#"><FacebookIcon /></a>
-          <a href="#"><XIcon /></a>
+        {/* VÄNSTER – logo + sociala ikoner */}
+        <div className="footer__top-left">
+          <span className="footer__logo">AURA</span>
+          <div className="footer__socials">
+            <a href="#">
+              <LinkedInIcon />
+            </a>
+            <a href="#">
+              <InstagramIcon />
+            </a>
+            <a href="#">
+              <FacebookIcon />
+            </a>
+            <a href="#">
+              <XIcon />
+            </a>
+          </div>
         </div>
-      </div>
 
-      {/* NAVIGERINGSLÄNKAR */}
-      <div className="footer__links">
-        <Link to="/">Home</Link>
-        <Link to="#">About</Link>
-        <Link to="/products">Shop</Link>
-        <Link to="#">Contact</Link>
-        <Link to="/account">Account</Link>
+        {/* HÖGER – nav-länkar */}
+        <div className="footer__links">
+          <Link to="/">Home</Link>
+          <Link to="#">About</Link>
+          <Link to="/products">Shop</Link>
+          <Link to="#">Contact</Link>
+          <Link to="/account">Account</Link>
+        </div>
       </div>
 
       {/* UNDRE DEL – Juridiska länkar + copyright */}
@@ -66,6 +76,7 @@ const Footer = () => {
           <a href="#">Terms of Service</a>
           <a href="#">Cookie Settings</a>
         </div>
+        {/* Linjen + copyright via border-top på denna element */}
         <p className="footer__copyright">©2026. All Rights Reserved AURA</p>
       </div>
     </footer>

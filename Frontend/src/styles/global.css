@@ -1,0 +1,25 @@
+/* src/styles/global.css */
+
+/* Tar bort ALL default margin/padding från webbläsaren, detta verkar orsaka konstig padding? */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-off-white);
+  font-family: var(--font-body);
+  color: var(--color-black);
+  /* Fäster footer i botten av sidan */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App-roten måste också vara flex column för att allt ska fungera */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

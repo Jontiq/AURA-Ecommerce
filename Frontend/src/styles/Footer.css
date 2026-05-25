@@ -1,0 +1,137 @@
+/* src/styles/Footer.css */
+
+.footer {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 40px 48px 24px;
+}
+
+/* ÖVRE DEL – logo till vänster, nav-länkar till höger */
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.footer__top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center; /* Säkerställer att logo och ikoner linjerar vänster */
+  padding: 0;    /* Nollställ all padding */
+  margin: 0; 
+}
+
+.footer__logo {
+  font-family: var(--font-logo);
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  padding: 0;    /* Nollställ all padding */
+  margin: 0; 
+}
+
+/* Sociala medie-ikoner sitter under loggan */
+.footer__socials {
+  display: flex;
+  gap: 8px;
+  padding: 0;    /* Nollställ all padding */
+  margin: 0; 
+}
+
+.footer__socials a {
+  color: var(--color-white);
+  /* 44x44px touch target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: 0;
+  margin: 0;
+}
+
+/* Nav-länkarna till höger i footer__top */
+.footer__links {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.footer__links a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* NEDRE DEL – separator + juridik + copyright */
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer__legal {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.footer__legal a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* Med linje mellan legal och copyright */
+.footer__copyright {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 16px;
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  margin: 0;
+}
+
+/* ================================
+   MOBIL – max 768px
+   ================================ */
+@media (max-width: 768px) {
+
+  .footer {
+    padding: 32px 16px 20px;
+    text-align: center;
+  }
+
+  /* På mobil: allt centrerat, staplas vertikalt */
+  .footer__top {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer__top-left {
+    align-items: center;
+  }
+
+  .footer__socials {
+    justify-content: center;
+  }
+
+  .footer__links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+
+  .footer__legal {
+    flex-direction: row;/* På en rad */
+    flex-wrap: wrap;/* Radbryts om det inte får plats */
+    gap: 12px 24px;
+    justify-content: center;
+  }
+}

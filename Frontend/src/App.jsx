@@ -20,18 +20,23 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <Router>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/confirmation" element={<ConfirmationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/account" element={<AccountPage />} />
-      </Routes>
-      <Footer/>
+      <Navbar />
+      {/* global.css sätter #root till display: flex; flex-direction: column; min-height: 100vh. 
+      Det betyder att Navbar, main och Footer staplas vertikalt. 
+      flex: 1 på <main> säger "ta all återstående höjd", så Footer alltid trycks ned till botten */}
+      <main style={{ flex: 1 }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/account" element={<AccountPage />} />
+        </Routes>
+      </main>
+      <Footer />
     </Router>
   );
 }
