@@ -25,19 +25,29 @@ function Navbar() {
       return;
     }
 
-    fetch("http://localhost:3001/products")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchResults = async () =>{
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
         const filtered = data.filter(
           (p) =>
             p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             p.brand.toLowerCase().includes(searchQuery.toLowerCase()),
         );
-        setSearchResults(filtered.slice(0, 5)); //Max 5 träffar i dropdown så att användaren inte blir macxad
+        setSearchResults(filtered.slice(0, 5)); //Max 5 träffar i dropdown så att användaren inte blir maxad
         setShowDropdown(true);
-      });
-  }, [searchQuery]); //Körs varje gång searchQuery ändras
-
+      } catch (error) {
+        console.error("Search failed:", error.message);
+        setShowDropdown(false);
+      }
+    };
+    fetchResults();
+}, [searchQuery]);
+    
   //Stänger dropdown om man klickar utanför sökfältet
   useEffect(() => {
     function handleClickOutside(e) {

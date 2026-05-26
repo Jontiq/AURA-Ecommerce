@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import "../styles/ProductsPage.css";
 
+console.log(import.meta.env.VITE_API_URL);
+
 //Alla tillgängliga notes i dropdown
 const ALL_NOTES = [
   "Lavender",
@@ -23,6 +25,7 @@ function ProductsPage() {
   //Produkter hämtade från json-server
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Filter-state
   const [activeCategory, setActiveCategory] = useState("All");
@@ -46,16 +49,25 @@ function ProductsPage() {
 
   // Hämtar produkter från json-server
   useEffect(() => {
-    fetch("http://localhost:3001/products")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
         setProducts(data);
+      } catch (err) {
+        console.error("Failed to fetch products:", err.message);
+        setError(err.message);
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch products:", err);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   // Togglar en note i/ur selectedNotes-arrayen
@@ -189,19 +201,17 @@ function ProductsPage() {
       <section className="products-grid-section">
         {loading ? (
           <p className="products-empty">Loading products...</p>
+        ) : error ? (
+          <p className="products-empty">Something went wrong: {error}</p>
         ) : filteredProducts.length === 0 ? (
-          <p className="products-empty">
-            {searchQuery
-              ? `No products found for "${searchQuery}"`
-              : "No products match your filters."}
-          </p>
+          <p className="products-empty">No products match your filters.</p>
         ) : (
           <div className="products-grid">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
-                onAddToCart={(p) => console.log("Add to cart:", p)} // Kopplas till cart-context senare
+                onAddToCart={(p) => console.log("Add to cart:", p)}
               />
             ))}
           </div>
