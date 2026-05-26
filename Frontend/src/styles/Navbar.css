@@ -40,6 +40,7 @@
 /* MITTEN – sökfältet växer och tar all tillgänglig plats */
 .navbar__center {
   flex: 1;
+  position: relative; /* för att dropdown ska fungera*/
 }
 
 .navbar__search {
@@ -55,6 +56,66 @@
 
 .navbar__search:focus {
   border-color: var(--color-black); /* visar användaren att de är i search fältet genom att ändra färgen på border, TILLGÄNGLIGHET!*/
+}
+
+.navbar__search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.navbar__search-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: var(--color-black);
+  transition: background-color 0.15s ease;
+  min-height: var(--touch-target);
+}
+
+.navbar__search-result:hover {
+  background-color: var(--color-bg-off-white);
+}
+.navbar__search-result-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.navbar__search-result-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.navbar__search-result-brand {
+  font-size: 0.75rem;
+  color: var(--color-gray-mid);
+}
+.navbar__search-result-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.navbar__search-result-price {
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.navbar__search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--color-gray-mid);
+  font-size: 0.9rem;
 }
 
 /* HÖGER */

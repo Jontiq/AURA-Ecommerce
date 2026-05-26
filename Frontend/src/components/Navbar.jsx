@@ -1,12 +1,67 @@
+//useRef kan hålla en variabel kvar trots att en sida omrenderas osv. annars hade variabeln nollställts till standardvärde.
+import { useState, useEffect, useRef } from "react";
 //importerar link för att ha klickbara texter (istället för <a> )
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css"; //Styling
 import  {User, ShoppingCart, Menu, X} from "lucide-react"; //Hämtar färdiga ikoner
 
-const Navbar = () => {
+function Navbar() {
   // Håller koll på om mobilmenyn är öppen eller stängd
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const navigate = useNavigate();
+  //Ref för att detektera klick utanför sökfältet, hjälper till att stänga / ta bort dropdown om man klickat utanför t.ex
+  const searchRef = useRef(null);
+
+  //Hämtar produkter och filtrerar medan användaren skriver
+  useEffect(() => {
+    //Om sökfältet är tomt, visa ingen dropdown
+    if (searchQuery.trim() === "") {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    fetch("http://localhost:3001/products")
+      .then((res) => res.json())
+      .then((data) => {
+        const filtered = data.filter(
+          (p) =>
+            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.brand.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+        setSearchResults(filtered.slice(0, 5)); //Max 5 träffar i dropdown så att användaren inte blir macxad
+        setShowDropdown(true);
+      });
+  }, [searchQuery]); //Körs varje gång searchQuery ändras
+
+  //Stänger dropdown om man klickar utanför sökfältet
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside); //Tar bort eventlistener när navbar inte syns, annars riskerar jag "memoryleak"
+  }, []);
+
+  // Enter = navigera till ProductsPage med sökterm
+  const handleSearchSubmit = (e) => {
+    if (e.key === "Enter" && searchQuery.trim() !== "") {
+      setShowDropdown(false);
+      navigate(`/products?search=${searchQuery.trim()}`);
+    }
+  };
+
+  // Klickar på en direktträff > ProductDetailPage
+  const handleResultClick = () => {
+    setSearchQuery("");
+    setShowDropdown(false);
+  };
 
   return (
     <nav className="navbar">
@@ -21,18 +76,54 @@ const Navbar = () => {
       {/* ── DESKTOP LAYOUT ── */}
       {/* TILL VÄNTSER, LOGO + LINK */}
       <div className="navbar__left">
-        <Link to="/" className="navbar__logo">AURA</Link>
-        <Link to="/products" className="navbar__link">Discover Collection</Link>
+        <Link to="/" className="navbar__logo">
+          AURA
+        </Link>
+        <Link to="/products" className="navbar__link">
+          Discover Collection
+        </Link>
       </div>
 
       {/* MITTEN, SEARCHBAR */}
-      <div className="navbar__center">
+      <div className="navbar__center" ref={searchRef}>
         <input
           type="text"
           placeholder="Search perfume..."
           className="navbar__search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleSearchSubmit}
         />
-      </div>
+
+      {/* Dropdown med direktträffar */}
+        {showDropdown && (
+          <div className="navbar__search-dropdown">
+            {searchResults.length > 0 ? (
+              searchResults.map((product) => (
+                <Link
+                  key={product.id}
+                  to={`/products/${product.id}`}
+                  className="navbar__search-result"
+                  onClick={handleResultClick}
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="navbar__search-result-image"
+                  />
+                  <div className="navbar__search-result-info">
+                    <span className="navbar__search-result-brand">{product.brand}</span>
+                    <span className="navbar__search-result-name">{product.name}</span>
+                  </div>
+                  <span className="navbar__search-result-price">${product.price}</span>
+                </Link>
+              ))
+            ) : (
+              <p className="navbar__search-empty">No products found</p>
+            )}
+          </div>
+        )}
+        </div>
 
       {/* HÖGER, IKONER (KONTO OCH KASSA samt count för hur många artiklar i kassan(just nu hårdkodad till 0)) */}
       <div className="navbar__right">
@@ -45,7 +136,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* ── MOBIL DROPDOWN-MENY, If statement fast "short-circuit evaluation, om true, gå vidare" ── */}
+      {/* ── MOBIL DROPDOWN-MENY, If statement fast "short-circuit evaluation, om true visa nedan element*/}
       {menuOpen && (
         <div className="navbar__dropdown">
           <Link
@@ -66,7 +157,7 @@ const Navbar = () => {
       )}
     </nav>
   );
-};;
+}
 
 export default Navbar;
 
