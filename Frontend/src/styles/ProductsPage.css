@@ -1,0 +1,194 @@
+/*HERO */
+.products-hero {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+
+.products-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.products-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /*Filter typ*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.products-hero__title {
+  font-family: var(--font-logo);
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--color-white);
+  letter-spacing: 0.05em;
+}
+
+/* FILTER */
+.products-filter {
+  padding: 32px 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.products-filter__search-label {
+  font-size: 0.95rem;
+  color: var(--color-gray-mid);
+}
+
+.products-filter__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.products-filter__label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+/* Filterknappar */
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-black);
+  font-size: 0.85rem;
+  cursor: pointer;
+  min-height: var(--touch-target);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-btn:hover {
+  border-color: var(--color-black);
+}
+
+.filter-btn--active {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+/* Notes dropdown */
+.notes-dropdown {
+  position: relative;
+}
+
+.notes-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 8px); /*gör så att dropdown menyn är 100% av storleken på knappen + 8px under knappen*/
+  left: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 100; /* så den lägger sig framför resten av sidan*/
+  max-height: 280px;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.notes-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-height: var(--touch-target);
+}
+
+.notes-dropdown__item:hover {
+  background-color: var(--color-bg-off-white);
+}
+
+.notes-dropdown__item input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-black);
+}
+
+/* Aktiva filter-taggar */
+.products-filter__tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-tag {
+  padding: 6px 12px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.filter-clear {
+  background: none;
+  border: none;
+  color: var(--color-gray-mid);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* PRODUKTGRID */
+.products-grid-section {
+  padding: 32px 48px 64px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.products-empty {
+  text-align: center;
+  color: var(--color-gray-mid);
+  font-size: 1rem;
+  padding: 64px 0;
+}
+
+/* ── MOBIL ── */
+@media (max-width: 768px) {
+
+  .products-hero {
+    height: 200px;
+  }
+
+  .products-hero__title {
+    font-size: 2rem;
+  }
+
+  .products-filter {
+    padding: 24px 16px 0;
+  }
+
+  .products-grid-section {
+    padding: 24px 16px 48px;
+  }
+
+  /* En kolumn på mobil – korten är horisontella */
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

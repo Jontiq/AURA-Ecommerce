@@ -1,11 +1,214 @@
-// src/pages/ProductsPage.jsx
+import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import "../styles/ProductsPage.css";
 
-const ProductsPage = () => {
+//Alla tillgängliga notes i dropdown
+const ALL_NOTES = [
+  "Lavender",
+  "Citrus",
+  "Woody",
+  "Sweet",
+  "Rose",
+  "Vanilla",
+  "Jasmine",
+  "Sandalwood",
+  "Bergamot",
+  "Amber",
+];
+
+const CATEGORIES = ["All", "Women", "Men", "Unisex"];
+
+function ProductsPage() {
+  //Produkter hämtade från json-server
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Filter-state
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedNotes, setSelectedNotes] = useState([]);
+  const [notesOpen, setNotesOpen] = useState(false); // dropdown öppen/stängd
+
+  // Läser URL-parametrar (t.ex. ?search=armani eller ?category=men)
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+  const categoryParam = searchParams.get("category") || "";
+
+  // Sätter aktiv kategori från URL-parameter (t.ex. från HomePage-kort)
+  useEffect(() => {
+    if (categoryParam) {
+      const match = CATEGORIES.find(
+        (c) => c.toLowerCase() === categoryParam.toLowerCase(),
+      );
+      if (match) setActiveCategory(match);
+    }
+  }, [categoryParam]);
+
+  // Hämtar produkter från json-server
+  useEffect(() => {
+    fetch("http://localhost:3001/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch products:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // Togglar en note i/ur selectedNotes-arrayen
+  const toggleNote = (note) => {
+    setSelectedNotes(
+      (prev) =>
+        prev.includes(note)
+          ? prev.filter((n) => n !== note) // Ta bort om redan vald
+          : [...prev, note], // Lägg till om inte vald
+    );
+  };
+
+  // Rensar alla filter
+  const clearFilters = () => {
+    setActiveCategory("All");
+    setSelectedNotes([]);
+  };
+
+  // Filtrerar produkter baserat på alla aktiva filter + sökterm
+  const filteredProducts = products.filter((product) => {
+    // Kategorifilter
+    const categoryMatch =
+      activeCategory === "All" ||
+      product.categories.includes(activeCategory.toLowerCase());
+
+    // Notes-filter produkten måste ha ALLA valda notes (görs via every)
+    const notesMatch =
+      selectedNotes.length === 0 ||
+      selectedNotes.every((note) => product.notes.includes(note.toLowerCase()));
+
+    // Sökfilter kollar namn och brand
+    const searchMatch =
+      searchQuery === "" ||
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.brand.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return categoryMatch && notesMatch && searchMatch;
+  });
+
+  const hasActiveFilters = activeCategory !== "All" || selectedNotes.length > 0;
+
   return (
-    <div>
-      <h1>Products Page</h1>
+    <div className="products-page">
+      {/*HERO*/}
+      <section className="products-hero">
+        <img
+          src="/src/assets/images/products-hero.png"
+          alt="Our Collection"
+          className="products-hero__image"
+        />
+        <div className="products-hero__overlay">
+          <h1 className="products-hero__title">Our Collection</h1>
+        </div>
+      </section>
+
+      {/* ── FILTER-SEKTION ── */}
+      <section className="products-filter">
+        {/* Sökresultat-rubrik */}
+        {searchQuery && (
+          <p className="products-filter__search-label">
+            Search results for <strong>"{searchQuery}"</strong>
+          </p>
+        )}
+
+        {/* Filterknappar */}
+        <div className="products-filter__row">
+          <span className="products-filter__label">Filter</span>
+
+          {/* Kategoriknappar */}
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`filter-btn ${activeCategory === cat ? "filter-btn--active" : ""}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+
+          {/*Notes dropdown-knapp*/}
+          <div className="notes-dropdown">
+            <button
+              className="filter-btn notes-dropdown__trigger"
+              onClick={() => setNotesOpen(!notesOpen)}
+            >
+              Notes{" "}
+              {selectedNotes.length > 0 ? `(${selectedNotes.length})` : ""}
+              <span>{notesOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {/*Dropdown-lista*/}
+            {notesOpen && (
+              <div className="notes-dropdown__menu">
+                {ALL_NOTES.map((note) => (
+                  <label key={note} className="notes-dropdown__item">
+                    <input
+                      type="checkbox"
+                      checked={selectedNotes.includes(note)}
+                      onChange={() => toggleNote(note)}
+                    />
+                    {note}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Aktiva notes-taggar + Clear filters */}
+        {(selectedNotes.length > 0 || hasActiveFilters) && (
+          <div className="products-filter__tags">
+            {selectedNotes.map((note) => (
+              <span
+                key={note}
+                className="filter-tag"
+                onClick={() => toggleNote(note)}
+              >
+                {note} ✕
+              </span>
+            ))}
+            {hasActiveFilters && (
+              <button className="filter-clear" onClick={clearFilters}>
+                Clear filters
+              </button>
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* ── PRODUKTGRID ── */}
+      <section className="products-grid-section">
+        {loading ? (
+          <p className="products-empty">Loading products...</p>
+        ) : filteredProducts.length === 0 ? (
+          <p className="products-empty">
+            {searchQuery
+              ? `No products found for "${searchQuery}"`
+              : "No products match your filters."}
+          </p>
+        ) : (
+          <div className="products-grid">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={(p) => console.log("Add to cart:", p)} // Kopplas till cart-context senare
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
-};
+}
 
 export default ProductsPage;

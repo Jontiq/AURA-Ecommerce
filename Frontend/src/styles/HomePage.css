@@ -216,7 +216,7 @@
     left: auto;
     right: 0;
     transform: translateY(-50%);
-    max-width: 70%;
+    max-width: 80%;
     width: 100%;
     color: var(--color-white);
     padding: 24px 16px;
@@ -231,6 +231,22 @@
     font-size: 1.8rem;
     color: var(--color-white);
   }
+
+.hero__text {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 80%;
+}
+
+.hero__underline {
+  text-decoration: underline; /*Aura :)*/
+}
+
+.hero__tagline {
+  font-size: 1.2rem;
+  margin-top: 8px;
+}
 
   /* Categories – 2 kolumner på mobil */
   .categories {
