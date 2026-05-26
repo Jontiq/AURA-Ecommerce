@@ -23,14 +23,18 @@
   color: var(--color-black);
   text-decoration: none;
   letter-spacing: 0.1em;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .navbar__link {
   font-size: 0.9rem;
   color: var(--color-black);
   text-decoration: none; /*Annars understruken*/
   white-space: nowrap;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 /* MITTEN – sökfältet växer och tar all tillgänglig plats */
 .navbar__center {
@@ -41,7 +45,7 @@
   width: 100%;
   padding: 10px 16px;
   border: 1px solid var(--color-gray-light);
-  border-radius: 24px;
+  border-radius: 5px;
   font-size: 0.9rem;
   outline: none;
   background-color: var(--color-white);
@@ -70,7 +74,10 @@
   color: var(--color-black);
   text-decoration: none;
   position: relative; /* Behövs för badge-positionering, dvs är relativ till ikonen (parent) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+
 
 .navbar__badge {
   position: absolute;
@@ -85,6 +92,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.navbar__logo:hover,
+.navbar__link:hover,
+.navbar__icon:hover{
+  transform: scale(1.1);
 }
 
 /* Hamburgare – dold på desktop, synlig på mobil */

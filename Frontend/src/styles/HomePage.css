@@ -1,0 +1,256 @@
+/* ── GENERELL SEKTION-TITEL ── */
+.section-title {
+  text-align: center;
+  font-family: var(--font-logo);
+  font-size: 2.9rem;
+  font-weight: 400;
+  margin-bottom: 32px;
+  color: var(--color-black);
+}
+
+/* HERO*/
+.hero {
+  position: relative;/* Gör att barn med position:absolute kan positioneras relativt hero */
+  width: 100%;
+  height: 500px;
+  overflow: hidden; /*klipper bort om något eventuellt sticker ut och visar ingen scroll i box */
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;/* Bilden täcker hela ytan utan att sträckas */
+}
+
+.hero__content {
+  position: absolute;/* Texten flyter ovanpå bilden */
+  top: 50%;
+  right: 15%;
+  transform: translateY(-50%);
+  max-width: 600px;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero__title {
+  font-family: var(--font-logo);
+  font-size: 4.2rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.hero__text {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.hero__underline {
+  text-decoration: underline; /*Aura :)*/
+}
+
+.hero__tagline {
+  font-size: 1.2rem;
+  margin-top: 8px;
+}
+
+/*CATEGORIES*/
+.categories {
+  padding: 64px 48px;
+}
+
+.categories__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* 4 kolumner på desktop */
+  gap: 16px;
+}
+
+.category-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4; /* Kortens höjd/bredd-förhållande */
+  text-decoration: none;
+}
+
+.category-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom-effekt vid hover */
+.category-card:hover .category-card__image {
+  transform: scale(1.05);
+}
+
+/* Gradient overlay – mörkt i botten så texten syns, kanske tar bort */
+.category-card__overlay {
+  position: absolute;
+  inset: 0;                  /* Täcker hela kortet */
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.category-card__name {
+  color: var(--color-white);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+/*CURATED SCENTS*/
+.scents {
+  padding: 64px 48px;
+  background-color: var(--color-bg-off-white);
+}
+
+.scents__grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.scent-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.scent-item__image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;/* Gör bilden rund */
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /*förbereder hover*/
+}
+
+.scent-item__image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.scent-item__name {
+  font-size: 0.85rem;
+  color: var(--color-black);
+}
+
+/*CTA BANNER (call to action)*/
+.cta {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.cta__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);   /* Mörkare bild så texten syns bättre */
+}
+
+.cta__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: var(--color-white);
+  text-align: center;
+  padding: 0 24px;
+}
+
+.cta__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.cta__button {
+  padding: 12px 28px;
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cta__button:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+/* ══════════════════════════════
+   MOBIL – max 768px
+══════════════════════════════ */
+@media (max-width: 768px) {
+
+    .section-title {
+    font-size: 1.8rem;
+  }
+
+  .hero {
+    height: 300px;      /* Fast höjd igen */
+    display: block;     /* Tillbaka till normalt */
+  }
+
+  .hero__image {
+    height: 100%;
+  }
+
+  .hero__content {
+    position: absolute;
+    top: 50%;
+    bottom: auto; /* nollstället botten för centrering*/
+    left: auto;
+    right: 0;
+    transform: translateY(-50%);
+    max-width: 70%;
+    width: 100%;
+    color: var(--color-white);
+    padding: 24px 16px;
+    background: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /*Högerställer flex-elementen*/
+    text-align: right;     /*Högerställer själva textraderna */
+  }
+
+  .hero__title {
+    font-size: 1.8rem;
+    color: var(--color-white);
+  }
+
+  /* Categories – 2 kolumner på mobil */
+  .categories {
+    padding: 40px 16px;
+  }
+
+  .categories__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Scents – 3 per rad på mobil */
+  .scents {
+    padding: 40px 16px;
+  }
+
+  .scent-item__image {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* CTA */
+  .cta__title {
+    font-size: 1.2rem;
+  }
+}
