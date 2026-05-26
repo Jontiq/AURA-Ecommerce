@@ -89,15 +89,37 @@ useEffect(() => {
 
   return (
     <nav className="navbar">
-      {/* Hamburgare – egen div, syns bara på mobil */}
-      <button
-        ref={hamburgerRef}
-        className="navbar__hamburger"
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-      >
-        {menuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {/* Gemensam wrapper för allt som rör mobilmenyn så klick inuti menyn inte stänger den direkt */}
+      <div ref={hamburgerRef} className="navbar__mobile-wrapper">
+        {/* Hamburgare – egen div, syns bara på mobil */}
+        <button
+          className="navbar__hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* ── MOBIL DROPDOWN-MENY, If statement fast "short-circuit evaluation, om true visa nedan element*/}
+        {menuOpen && (
+          <div className="navbar__dropdown">
+            <Link
+              to="/products"
+              className="navbar__dropdown-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Discover Collection
+            </Link>
+            <Link
+              to="/account"
+              className="navbar__dropdown-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Account
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/* ── DESKTOP LAYOUT ── */}
       {/* TILL VÄNTSER, LOGO + LINK */}
@@ -167,25 +189,6 @@ useEffect(() => {
           <span className="navbar__badge">0</span>
         </Link>
       </div>
-      {/* ── MOBIL DROPDOWN-MENY, If statement fast "short-circuit evaluation, om true visa nedan element*/}
-      {menuOpen && (
-        <div className="navbar__dropdown">
-          <Link
-            to="/products"
-            className="navbar__dropdown-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            Discover Collection
-          </Link>
-          <Link
-            to="/account"
-            className="navbar__dropdown-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            Account
-          </Link>
-        </div>
-      )}
     </nav>
   );
 }

@@ -163,6 +163,7 @@
 }
 
 /* Hamburgare – dold på desktop, synlig på mobil */
+.navbar__mobile-wrapper,
 .navbar__hamburger {
   display: none;
   background: none;
@@ -199,16 +200,18 @@
     gap: 0px;
   }
 
-.navbar__hamburger {
+  .navbar__mobile-wrapper {
     display: flex;
-    order: 1; /* Hamburger längst till vänster */
-    flex:1; /*Tar 1/3 av bredden*/
+    order: 1; /* Längst till vänster */
+    flex: 1;  /* Tar 1/3 av bredden */
     justify-content: flex-start;
   }
 
-  /* .navbar__hamburger-wrapper {
-  position: relative;
-} */
+.navbar__hamburger {
+    display: flex;
+    justify-content: flex-start;
+  }
+
 
   /* hamburger VÄNSTER, logo MITTEN, cart HÖGER * */
   .navbar__left {
