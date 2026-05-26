@@ -42,6 +42,12 @@
   color: var(--color-gray-mid);
 }
 
+.products-filter__search-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .products-filter__row {
   display: flex;
   align-items: center;

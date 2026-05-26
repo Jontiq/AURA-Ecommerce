@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import "../styles/ProductsPage.css";
-
-console.log(import.meta.env.VITE_API_URL);
 
 //Alla tillgängliga notes i dropdown
 const ALL_NOTES = [
@@ -32,10 +30,24 @@ function ProductsPage() {
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [notesOpen, setNotesOpen] = useState(false); // dropdown öppen/stängd
 
+  const navigate = useNavigate();
   // Läser URL-parametrar (t.ex. ?search=armani eller ?category=men)
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   const categoryParam = searchParams.get("category") || "";
+
+  const notesRef = useRef(null);
+
+  //För att stänga notesdropdown om man klickar utanför
+  useEffect(() => {
+    function handleNotesOutside(e) {
+      if (notesRef.current && !notesRef.current.contains(e.target)) {
+        setNotesOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleNotesOutside);
+    return () => document.removeEventListener("mousedown", handleNotesOutside);
+  }, []);
 
   // Sätter aktiv kategori från URL-parameter (t.ex. från HomePage-kort)
   useEffect(() => {
@@ -127,9 +139,17 @@ function ProductsPage() {
       <section className="products-filter">
         {/* Sökresultat-rubrik */}
         {searchQuery && (
-          <p className="products-filter__search-label">
-            Search results for <strong>"{searchQuery}"</strong>
-          </p>
+          <div className="products-filter__search-row">
+            <p className="products-filter__search-label">
+              Search results for <strong>"{searchQuery}"</strong>
+            </p>
+            <button
+              className="filter-clear"
+              onClick={() => navigate("/products")}
+            >
+              Clear search
+            </button>
+          </div>
         )}
 
         {/* Filterknappar */}
@@ -148,7 +168,7 @@ function ProductsPage() {
           ))}
 
           {/*Notes dropdown-knapp*/}
-          <div className="notes-dropdown">
+          <div className="notes-dropdown" ref={notesRef}>
             <button
               className="filter-btn notes-dropdown__trigger"
               onClick={() => setNotesOpen(!notesOpen)}

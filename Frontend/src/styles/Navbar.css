@@ -206,6 +206,10 @@
     justify-content: flex-start;
   }
 
+  /* .navbar__hamburger-wrapper {
+  position: relative;
+} */
+
   /* hamburger VÄNSTER, logo MITTEN, cart HÖGER * */
   .navbar__left {
     flex: 1;

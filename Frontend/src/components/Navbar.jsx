@@ -15,6 +15,7 @@ function Navbar() {
   const navigate = useNavigate();
   //Ref för att detektera klick utanför sökfältet, hjälper till att stänga / ta bort dropdown om man klickat utanför t.ex
   const searchRef = useRef(null);
+  const hamburgerRef = useRef(null);
 
   //Hämtar produkter och filtrerar medan användaren skriver
   useEffect(() => {
@@ -25,7 +26,7 @@ function Navbar() {
       return;
     }
 
-    const fetchResults = async () =>{
+    const fetchResults = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
         if (!res.ok) {
@@ -46,18 +47,31 @@ function Navbar() {
       }
     };
     fetchResults();
-}, [searchQuery]);
-    
-  //Stänger dropdown om man klickar utanför sökfältet
+  }, [searchQuery]);
+
+  // Stänger dropdowns/menyer om man klickar utanför dem
   useEffect(() => {
-    function handleClickOutside(e) {
+    function handleSearchOutside(e) {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside); //Tar bort eventlistener när navbar inte syns, annars riskerar jag "memoryleak"
+    document.addEventListener("mousedown", handleSearchOutside);
+    return () => document.removeEventListener("mousedown", handleSearchOutside);
   }, []);
+
+
+//SEPARAT UTKAST FÖR HAMBURGARMENYN
+useEffect(() => {
+  function handleHamburgerOutside(e) {
+    if (hamburgerRef.current && !hamburgerRef.current.contains(e.target)) {
+      setMenuOpen(false);
+    }
+  }
+  document.addEventListener("mousedown", handleHamburgerOutside);
+  return () =>
+    document.removeEventListener("mousedown", handleHamburgerOutside);
+}, []);
 
   // Enter = navigera till ProductsPage med sökterm
   const handleSearchSubmit = (e) => {
@@ -77,12 +91,14 @@ function Navbar() {
     <nav className="navbar">
       {/* Hamburgare – egen div, syns bara på mobil */}
       <button
+        ref={hamburgerRef}
         className="navbar__hamburger"
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle menu"
       >
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
+
       {/* ── DESKTOP LAYOUT ── */}
       {/* TILL VÄNTSER, LOGO + LINK */}
       <div className="navbar__left">
@@ -105,7 +121,7 @@ function Navbar() {
           onKeyDown={handleSearchSubmit}
         />
 
-      {/* Dropdown med direktträffar */}
+        {/* Dropdown med direktträffar */}
         {showDropdown && (
           <div className="navbar__search-dropdown">
             {searchResults.length > 0 ? (
@@ -122,10 +138,16 @@ function Navbar() {
                     className="navbar__search-result-image"
                   />
                   <div className="navbar__search-result-info">
-                    <span className="navbar__search-result-brand">{product.brand}</span>
-                    <span className="navbar__search-result-name">{product.name}</span>
+                    <span className="navbar__search-result-brand">
+                      {product.brand}
+                    </span>
+                    <span className="navbar__search-result-name">
+                      {product.name}
+                    </span>
                   </div>
-                  <span className="navbar__search-result-price">${product.price}</span>
+                  <span className="navbar__search-result-price">
+                    ${product.price}
+                  </span>
                 </Link>
               ))
             ) : (
@@ -133,7 +155,7 @@ function Navbar() {
             )}
           </div>
         )}
-        </div>
+      </div>
 
       {/* HÖGER, IKONER (KONTO OCH KASSA samt count för hur många artiklar i kassan(just nu hårdkodad till 0)) */}
       <div className="navbar__right">
@@ -145,14 +167,13 @@ function Navbar() {
           <span className="navbar__badge">0</span>
         </Link>
       </div>
-
       {/* ── MOBIL DROPDOWN-MENY, If statement fast "short-circuit evaluation, om true visa nedan element*/}
       {menuOpen && (
         <div className="navbar__dropdown">
           <Link
             to="/products"
             className="navbar__dropdown-link"
-            onClick={() => setMenuOpen(false)} // Stänger menyn när man klickar
+            onClick={() => setMenuOpen(false)}
           >
             Discover Collection
           </Link>
