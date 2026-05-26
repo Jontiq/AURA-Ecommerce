@@ -16,10 +16,12 @@ import AccountPage from "./pages/AccountPage";
 //Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop/>
       <Navbar />
       {/* global.css sätter #root till display: flex; flex-direction: column; min-height: 100vh. 
       Det betyder att Navbar, main och Footer staplas vertikalt. 

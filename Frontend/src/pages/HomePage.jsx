@@ -80,14 +80,18 @@ function Homepage() {
         <h2 className="section-title">Our Curated Scents</h2>
         <div className="scents__grid">
           {SCENTS.map((scent) => (
-            <div key={scent.name} className="scent-item">
+            <Link
+              key={scent.name}
+              to={`/products?note=${scent.name.toLowerCase()}`}
+              className="scent-item"
+            >
               <img
                 src={scent.image}
                 alt={scent.name}
                 className="scent-item__image"
               />
               <span className="scent-item__name">{scent.name}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

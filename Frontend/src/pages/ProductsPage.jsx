@@ -35,6 +35,7 @@ function ProductsPage() {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   const categoryParam = searchParams.get("category") || "";
+  const noteParam = searchParams.get("note") || "";
 
   const notesRef = useRef(null);
 
@@ -58,6 +59,15 @@ function ProductsPage() {
       if (match) setActiveCategory(match);
     }
   }, [categoryParam]);
+
+  useEffect(() => {
+    if (noteParam) {
+      const match = ALL_NOTES.find(
+        (n) => n.toLowerCase() === noteParam.toLowerCase(),
+      );
+      if (match) setSelectedNotes([match]);
+    }
+  }, [noteParam]);
 
   // Hämtar produkter från json-server
   useEffect(() => {
