@@ -1,0 +1,101 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Bleu de Chanel",
+      "brand": "Chanel",
+      "description": "A woody aromatic fragrance for the man who defies convention. Fresh, clean and deeply sophisticated.",
+      "volume": 100,
+      "price": 149,
+      "notes": ["citrus", "cedar", "woody"],
+      "categories": ["men"],
+      "image": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400"
+    },
+    {
+      "id": 2,
+      "name": "Coco Mademoiselle",
+      "brand": "Chanel",
+      "description": "An oriental fresh fragrance with a strong, free-spirited character. Bold and feminine.",
+      "volume": 100,
+      "price": 159,
+      "notes": ["floral", "amber", "musky"],
+      "categories": ["women"],
+      "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": 3,
+      "name": "Acqua di Gio",
+      "brand": "Giorgio Armani",
+      "description": "Inspired by the natural beauty of the Mediterranean. A timeless aquatic freshness.",
+      "volume": 100,
+      "price": 119,
+      "notes": ["fresh", "citrus", "musky"],
+      "categories": ["men"],
+      "image": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400"
+    },
+    {
+      "id": 4,
+      "name": "Black Opium",
+      "brand": "Yves Saint Laurent",
+      "description": "The original rock'n'roll perfume. Featuring addictive coffee and sensual vanilla.",
+      "volume": 90,
+      "price": 139,
+      "notes": ["spicy", "amber", "musky"],
+      "categories": ["women"],
+      "image": "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=400"
+    },
+    {
+      "id": 5,
+      "name": "CK One",
+      "brand": "Calvin Klein",
+      "description": "A shared fragrance for a shared world. Fresh, clean and universally appealing.",
+      "volume": 200,
+      "price": 79,
+      "notes": ["citrus", "fresh", "woody"],
+      "categories": ["unisex"],
+      "image": "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=400"
+    },
+    {
+      "id": 6,
+      "name": "Sauvage",
+      "brand": "Dior",
+      "description": "A radically fresh composition with a powerful and noble character. Inspired by wide open spaces.",
+      "volume": 100,
+      "price": 145,
+      "notes": ["spicy", "woody", "amber"],
+      "categories": ["men"],
+      "image": "https://images.unsplash.com/photo-1610461888750-10bfc601b874?q=80&w=699&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": 7,
+      "name": "La Vie Est Belle",
+      "brand": "Lancôme",
+      "description": "A declaration of happiness and a new vision of feminine elegance and freedom.",
+      "volume": 100,
+      "price": 129,
+      "notes": ["floral", "amber", "musky"],
+      "categories": ["women"],
+      "image": "https://images.unsplash.com/photo-1566977776052-6e61e35bf9be?w=400"
+    },
+    {
+      "id": 8,
+      "name": "Molecule 01",
+      "brand": "Escentric Molecules",
+      "description": "A single molecule fragrance. Reacts uniquely with each individual's skin chemistry.",
+      "volume": 100,
+      "price": 189,
+      "notes": ["woody", "musky"],
+      "categories": ["unisex", "men", "women"],
+      "image": "https://images.unsplash.com/photo-1705338670422-01133208eab9?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+  ],
+  "orders": [],
+  "users": [
+    {
+      "id": 1,
+      "username": "user",
+      "password": "password",
+      "email": "user@aura.com"
+    }
+  ]
+}
