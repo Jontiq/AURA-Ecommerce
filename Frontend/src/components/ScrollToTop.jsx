@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function ScrollToTop() {
-  const { pathname } = useLocation(); //Pathname = URL, hämtar aktuell url från useLocation
+  const { pathname } = useLocation(); //Pathname = URL, hämtar aktuell url från useLocatio
+  console.log(pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0); //kordinater på sidan

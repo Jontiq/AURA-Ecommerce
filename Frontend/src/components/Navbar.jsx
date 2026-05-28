@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css"; //Styling
 import  {User, ShoppingCart, Menu, X} from "lucide-react"; //Hämtar färdiga ikoner
 
+//Context
+import { useCart } from "../context/CartContext";
+
 function Navbar() {
   // Håller koll på om mobilmenyn är öppen eller stängd
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,6 +20,9 @@ function Navbar() {
   const searchRef = useRef(null);
   const hamburgerRef = useRef(null);
 
+  //context
+  const { totalItems } = useCart();
+
   //Hämtar produkter och filtrerar medan användaren skriver
   useEffect(() => {
     //Om sökfältet är tomt, visa ingen dropdown
@@ -25,7 +31,7 @@ function Navbar() {
       setShowDropdown(false);
       return;
     }
-
+    //Det finns ett värde i sökfält
     const fetchResults = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
@@ -186,7 +192,8 @@ useEffect(() => {
         </Link>
         <Link to="/checkout" className="navbar__icon">
           <ShoppingCart size={24} />
-          <span className="navbar__badge">0</span>
+          {/* Hämtar totalt antal artiklar i kassan från cartContext via totalItems */}
+          <span className="navbar__badge">{totalItems}</span>
         </Link>
       </div>
     </nav>

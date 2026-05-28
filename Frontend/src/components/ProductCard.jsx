@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import "../styles/ProductCard.css";
 
-function ProductCard({ product, onAddToCart }) {
+//Context
+import { useCart } from "../context/CartContext";
+
+function ProductCard({ product}) {
+  //Context funktion
+  const { addToCart } = useCart();
   return (
     // Klickar man på kortet -> ProductDetailPage
     <Link to={`/products/${product.id}`} className="product-card">
@@ -25,8 +30,9 @@ function ProductCard({ product, onAddToCart }) {
           <button
             className="product-card__button"
             onClick={(e) => {
-              e.preventDefault(); //Hindrar Link-navigering
-              onAddToCart(product);
+              e.preventDefault();
+              //Lägger till i kassan via contextfunktionen
+              addToCart(product, 1);
             }}
           >
             Add to cart

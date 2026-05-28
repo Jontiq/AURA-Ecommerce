@@ -3,6 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import "../styles/ProductDetailPage.css";
 
+//Context
+import { useCart } from "../context/CartContext";
+
 function ProductDetailPage() {
   const { id } = useParams(); //Hämtar produktens ID från URL:en (/products/:id)
   const navigate = useNavigate();
@@ -11,6 +14,9 @@ function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1); // Startar på 1
+
+  //context
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -134,10 +140,10 @@ function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Add to cart */}
+          {/* Add to cart, anropar metod från context */}
           <button
             className="product-detail__add-btn"
-            onClick={() => console.log("Add to cart:", product, quantity)}
+            onClick={() => addToCart(product, quantity)}
           >
             Add to cart <ShoppingCart size={18} />
           </button>
