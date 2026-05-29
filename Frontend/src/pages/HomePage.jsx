@@ -47,6 +47,26 @@ function Homepage() {
         </div>
       </section>
 
+      {/* ── SEKTION 3: CURATED SCENTS ── */}
+      <section className="scents">
+        <h2 className="section-title">Our Curated Scents</h2>
+        <div className="scents__grid">
+          {SCENTS.map((scent) => (
+            <Link
+              key={scent.name}
+              to={`/products?note=${scent.name.toLowerCase()}`}
+              className="scent-item"
+            >
+              <img
+                src={scent.image}
+                alt={scent.name}
+                className="scent-item__image"
+              />
+              <span className="scent-item__name">{scent.name}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
       {/* ── SEKTION 2: CATEGORIES ── */}
       <section className="categories">
         <h2 className="section-title">Categories</h2>
@@ -70,27 +90,6 @@ function Homepage() {
                   {category.name.toUpperCase()}
                 </span>
               </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ── SEKTION 3: CURATED SCENTS ── */}
-      <section className="scents">
-        <h2 className="section-title">Our Curated Scents</h2>
-        <div className="scents__grid">
-          {SCENTS.map((scent) => (
-            <Link
-              key={scent.name}
-              to={`/products?note=${scent.name.toLowerCase()}`}
-              className="scent-item"
-            >
-              <img
-                src={scent.image}
-                alt={scent.name}
-                className="scent-item__image"
-              />
-              <span className="scent-item__name">{scent.name}</span>
             </Link>
           ))}
         </div>

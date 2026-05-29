@@ -1,0 +1,446 @@
+/* src/styles/CheckoutPage.css */
+
+.checkout {
+  padding: 40px 48px 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 60vh;
+}
+
+/* ── Cart header ── */
+.checkout__cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.checkout__title {
+  font-family: var(--font-logo);
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.checkout__continue {
+  color: var(--color-gray-mid);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Tom cart */
+.checkout__empty { color: var(--color-gray-mid); }
+
+.checkout__empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 64px 0;
+  text-align: center;
+  min-height: 50vh;
+}
+
+.checkout__start-shopping {
+  padding: 12px 32px;
+  border: 1px solid var(--color-black);
+  background: var(--color-white);
+  color: var(--color-black);
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.checkout__start-shopping:hover {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* ══════════════════════════════
+   CART ITEMS – DESKTOP
+   Grid: [Bild] [Info] [Qty] [Total] [Delete]
+══════════════════════════════ */
+.checkout__items {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto auto auto;
+  align-items: center;
+  column-gap: 24px;
+  border-bottom: 1px solid var(--color-gray-light);
+}
+.cart-item:last-child { border-bottom: none; }
+
+/* Desktop: right-wrapper osynlig */
+.cart-item__right { display: contents; }
+
+/* Fix 1: Bild fyller hela radhöjden */
+.cart-item__image {
+  width: 120px;          /* Sätter en fast bredd på mobilen precis som på desktop */
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 0;
+  align-self: stretch;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+/* Info: Namn, Brand, Pris */
+.cart-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 16px 0;
+}
+.cart-item__name {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.cart-item__brand {
+  font-size: 0.85rem;
+  color: var(--color-gray-mid);
+}
+.cart-item__price {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Quantity-kolumn */
+.cart-item__quantity-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+}
+
+.cart-item__label {
+  font-size: 0.78rem;
+  color: var(--color-gray-mid);
+  white-space: nowrap;
+}
+
+.cart-item__quantity {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cart-qty-btn {
+  background: var(--color-white);
+  border: none;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-black);
+  transition: background-color 0.15s ease;
+}
+.cart-qty-btn:hover { background-color: var(--color-gray-light); }
+
+.cart-qty-input {
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--color-gray-light);
+  border-right: 1px solid var(--color-gray-light);
+  font-size: 0.9rem;
+  outline: none;
+  font-family: var(--font-body);
+  width: 44px;
+  min-width: 44px;
+  height: 36px;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+.cart-qty-input::-webkit-outer-spin-button,
+.cart-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Total-kolumn (desktop only) */
+.cart-item__total-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 80px;
+  padding: 16px 0;
+}
+.cart-item__total {
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Delete */
+.cart-item__remove {
+  background: none;
+  border: none;
+  color: var(--color-red);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+.cart-item__remove:hover { background-color: #fef2f2; }
+
+/* ══ CHECKOUT TOTAL (fix 4: placeras i JSX mellan payment + place order) ══ */
+.checkout__total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5% 0;
+  gap:2%;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-gray-light);
+  margin-bottom: 16px;
+}
+
+/* Divider */
+.checkout__divider {
+  border: none;
+  border-top: 1px solid var(--color-gray-light);
+  margin: 16px 0 32px;
+}
+
+/* ══ SHIPPING + PAYMENT ══ */
+.checkout__section-title {
+  font-family: var(--font-logo);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.checkout__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Fix 3: Jämna kolumner */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  color: var(--color-gray-mid);
+}
+
+.form-input {
+  padding: 11px 12px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: var(--font-body);
+  background: var(--color-white);
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+.form-input:focus { border-color: var(--color-black); }
+.form-input--error { border-color: var(--color-red); }
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  cursor: pointer;
+  height: 56px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.payment-option input[type="radio"] {
+  accent-color: var(--color-green);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.payment-option--active {
+  border-color: var(--color-green);
+  background-color: var(--color-green-light);
+}
+.payment-option__label { flex: 1; font-size: 0.9rem; }
+.payment-option__logos { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.payment-option__logo { height: 22px; width: auto; object-fit: contain; }
+
+/* Place Order */
+.checkout__place-order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-black);
+  border: 1px solid var(--color-black);
+  color: var(--color-white);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.checkout__place-order:hover:not(:disabled) {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+.checkout__place-order--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════
+   MOBIL  ≤ 768px
+══════════════════════════════ */
+@media (max-width: 768px) {
+
+  .checkout {
+    padding: 20px 16px 60px;
+  }
+
+  .checkout__items {
+    border: 1px solid var(--color-gray-light);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-white);
+  }
+
+  /* Cart item: flex istället för grid */
+  .cart-item {
+    display: flex;
+    align-items: center; /* Centrerar innehållet vertikalt */
+    gap: 0;
+    padding: 0;
+    position: relative;
+    border-bottom: 1px solid var(--color-gray-light);
+  }
+
+  .cart-item:last-child { border-bottom: none; }
+
+  /* Fix 1: Bild matchar kortets höjd */
+  .cart-item__image {
+    width: 145px;
+    aspect-ratio: 1 / 1;    /* Lägg till denna */
+    object-fit: cover;
+    display: block;
+    align-self: stretch;
+  }
+
+  /* Right-wrapper: synlig flex-kolumn */
+  .cart-item__right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    min-width: 0;
+    /* Ändra sista siffran från 12px till 24px (eller 20px) för att skjuta allt till höger */
+    padding: 12px 0px 12px 12px;
+  }
+
+  /* Rad 1: Namn + Brand */
+  .cart-item__info {
+    padding: 0 32px 8px 0; /* plats för trash */
+  }
+  /* Dölj pris i info på mobil — visas i rad 2 istället */
+  .cart-item__info .cart-item__price {
+    display: none;
+  }
+  .cart-item__name { white-space: normal; }
+
+  /* Trash absolut höger */
+  .cart-item__remove {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+  }
+
+  /* Rad 2: Pris (vänster) + Total (höger) */
+  .cart-item__price-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+  }
+
+  .cart-item__total-col {
+    display: none;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 0;
+    min-width: unset;
+  }
+  .cart-item__total { font-size: 1rem; }
+
+  /* Rad 3: Quantity full bredd */
+  .cart-item__quantity-col {
+    width: 80%;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+  }
+  .cart-item__quantity-col .cart-item__label { display: none; }
+  .cart-item__quantity {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .cart-qty-btn { flex: 1; width: auto; height: 44px; }
+  .cart-qty-input { flex: 1; width: auto; min-width: 0; height: 44px; }
+
+  /* Total-rad */
+  .checkout__total {
+    margin-bottom: 24px;
+  }
+
+  .checkout__section-title { text-align: center; }
+}
+
+/* Desktop: dölj price-total-row — används bara på mobil */
+@media (min-width: 769px) {
+  .cart-item__price-total-row { display: none; }
+  /* Desktop total-col visas i gridet */
+}
