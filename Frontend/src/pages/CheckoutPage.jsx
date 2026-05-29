@@ -21,7 +21,7 @@ function CheckoutPage() {
   });
 
   const [errors, setErrors] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("swish");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,9 +31,41 @@ function CheckoutPage() {
 
   const validate = () => {
     const newErrors = {};
-    Object.keys(form).forEach((key) => {
-      if (!form[key].trim()) newErrors[key] = true;
-    });
+
+    //Kolla om fält är tomma (och ge dem ett anpassat meddelande)
+    if (!form.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!form.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!form.streetAddress.trim())
+      newErrors.streetAddress = "Street address is required";
+    if (!form.postalCode.trim())
+      newErrors.postalCode = "Postal code is required";
+    if (!form.city.trim()) newErrors.city = "City is required";
+    if (!form.phone.trim()) newErrors.phone = "Phone number is required";
+
+    //Validera e-post (både om den är tom och om formatet är fel)
+    if (!form.email.trim()) {
+      newErrors.email = "Email address is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(form.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+    }
+
+    if (!form.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else {
+      // Tillåter siffror, mellanslag, bindestreck och ett inledande plus (+)
+      const phoneRegex = /^\+?[0-9\s\-]{6,15}$/;
+      if (!phoneRegex.test(form.phone)) {
+        newErrors.phone = "Please enter a valid phone number";
+      }
+    }
+
+    if (!form.paymentMethod) {
+      newErrors.paymentMethod = "Please select a payment method";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -114,7 +146,12 @@ function CheckoutPage() {
           <div className="checkout__form">
             <div className="form-row">
               <div className="form-field">
-                <label className="form-label">First Name</label>
+                <div className="form-label-row">
+                  <label className="form-label">First Name</label>
+                  {errors.firstName && (
+                    <span className="form-error-msg">{errors.firstName}</span>
+                  )}
+                </div>
                 <input
                   className={`form-input ${errors.firstName ? "form-input--error" : ""}`}
                   type="text"
@@ -124,7 +161,12 @@ function CheckoutPage() {
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Last Name</label>
+                <div className="form-label-row">
+                  <label className="form-label">Last Name</label>
+                  {errors.lastName && (
+                    <span className="form-error-msg">{errors.lastName}</span>
+                  )}
+                </div>
                 <input
                   className={`form-input ${errors.lastName ? "form-input--error" : ""}`}
                   type="text"
@@ -136,7 +178,13 @@ function CheckoutPage() {
             </div>
 
             <div className="form-field">
-              <label className="form-label">Street Address</label>
+              <div className="form-label-row">
+                <label className="form-label">Street Adress</label>
+                {errors.streetAddress && (
+                  <span className="form-error-msg">{errors.streetAddress}</span>
+                )}
+              </div>
+
               <input
                 className={`form-input ${errors.streetAddress ? "form-input--error" : ""}`}
                 type="text"
@@ -148,7 +196,13 @@ function CheckoutPage() {
 
             <div className="form-row">
               <div className="form-field">
-                <label className="form-label">Postal Code</label>
+                <div className="form-label-row">
+                  <label className="form-label">Postal Code</label>
+                  {errors.postalCode && (
+                    <span className="form-error-msg">{errors.postalCode}</span>
+                  )}
+                </div>
+
                 <input
                   className={`form-input ${errors.postalCode ? "form-input--error" : ""}`}
                   type="text"
@@ -158,7 +212,13 @@ function CheckoutPage() {
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">City</label>
+                <div className="form-label-row">
+                  <label className="form-label">City</label>
+                  {errors.city && (
+                    <span className="form-error-msg">{errors.city}</span>
+                  )}
+                </div>
+
                 <input
                   className={`form-input ${errors.city ? "form-input--error" : ""}`}
                   type="text"
@@ -168,25 +228,36 @@ function CheckoutPage() {
                 />
               </div>
             </div>
-              <div className="form-field">
+            <div className="form-field">
+              <div className="form-label-row">
                 <label className="form-label">Email</label>
-                <input
-                  className={`form-input ${errors.email ? "form-input--error" : ""}`}
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                />
-              <div className="form-field">
-                <label className="form-label">Phone</label>
-                <input
-                  className={`form-input ${errors.phone ? "form-input--error" : ""}`}
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                />
+                {errors.email && (
+                  <span className="form-error-msg">{errors.email}</span>
+                )}
               </div>
+              <input
+                className={`form-input ${errors.email ? "form-input--error" : ""}`}
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-field">
+              <div className="form-label-row">
+                <label className="form-label">Phone</label>
+                {errors.phone && (
+                  <span className="form-error-msg">{errors.phone}</span>
+                )}
+              </div>
+
+              <input
+                className={`form-input ${errors.phone ? "form-input--error" : ""}`}
+                type="tel"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+              />
             </div>
           </div>
 

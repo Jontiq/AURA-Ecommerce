@@ -187,7 +187,7 @@ useEffect(() => {
 
       {/* HÖGER, IKONER (KONTO OCH KASSA samt count för hur många artiklar i kassan(just nu hårdkodad till 0)) */}
       <div className="navbar__right">
-        <Link to="/account" className="navbar__icon desktop-only">
+        <Link to="/login" className="navbar__icon desktop-only">
           <User size={24} />
         </Link>
         <Link to="/checkout" className="navbar__icon">

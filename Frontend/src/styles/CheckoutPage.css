@@ -261,6 +261,24 @@
   color: var(--color-gray-mid);
 }
 
+.form-label-row {
+  display: flex !important;
+  flex-direction: row !important; /* Tvingar dem att ligga sida vid sida */
+  justify-content: space-between; /* Skjuter label till vänster, error till höger */
+  align-items: flex-end;          /* Sätter båda på samma bottenlinje */
+  width: 100%;
+  margin-bottom: 2px;
+}
+.form-error-msg {
+  color: var(--color-red, #dc2626);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-align: right;
+  line-height: 1;                 /* Tar bort extra höjd-space */
+  margin: 0;                      /* Nollställer dolda marginaler */
+  white-space: nowrap;
+}
+
 .form-input {
   padding: 11px 12px;
   border: 1px solid var(--color-gray-light);
@@ -438,10 +456,29 @@
   }
 
   .checkout__section-title { text-align: center; }
+  .cart-item__price-total-row { display: none; }
+
+  .form-label-row {
+    flex-direction: row !important;     /* Tvinga rad-vy */
+    justify-content: space-between !important; /* Label till vänster, error till höger */
+    align-items: flex-end !important;   /* Snygg bottenlinje */
+    width: 100% !important;
+    gap: 8px !important;                /* Säkerhetsmarginal om de krockar */
+    margin-bottom: 2px !important;             /* Pyttelite mellanrum mellan label och error */
+  }
+
+.form-error-msg {
+    text-align: right !important;
+    white-space: nowrap !important;     /* Håll det på en rad så långt det går */
+    font-size: 0.75rem !important;       /* Texten ska flöda från vänster på mobilen */
+  }
+
+  .form-row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+  }
+
 }
 
-/* Desktop: dölj price-total-row — används bara på mobil */
-@media (min-width: 769px) {
-  .cart-item__price-total-row { display: none; }
-  /* Desktop total-col visas i gridet */
-}
+.cart-item__price-total-row { display: none; }
