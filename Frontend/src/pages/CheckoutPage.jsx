@@ -21,7 +21,7 @@ function CheckoutPage() {
   });
 
   const [errors, setErrors] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState("swish");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;

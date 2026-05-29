@@ -1,0 +1,156 @@
+/* src/styles/ConfirmationPage.css */
+
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.confirmation--empty {
+  min-height: 50vh;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Checkmark-ikon */
+.confirmation__icon {
+  width: 120px;
+  height: 120px;
+}
+
+.confirmation__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Gör att bilden skalar ner snyggt utan att förvridas */
+}
+
+/* Titel */
+.confirmation__title {
+  font-family: var(--font-logo);
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.confirmation__subtitle {
+  font-size: 0.95rem;
+  color: var(--color-gray-mid);
+  margin-bottom: 32px;
+  max-width: 400px;
+}
+
+/* Order-kort */
+.confirmation__card {
+  width: 100%;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.confirmation__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.confirmation__label {
+  font-size: 0.85rem;
+  color: var(--color-gray-mid);
+}
+
+.confirmation__order-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.confirmation__divider {
+  border: none;
+  border-top: 1px solid var(--color-gray-light);
+  margin: 8px 0;
+}
+
+/* Items */
+.confirmation__items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.confirmation__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.confirmation__item-name {
+  font-weight: 500;
+}
+
+.confirmation__item-qty {
+  font-weight: 400;
+  color: var(--color-gray-mid);
+  font-size: 0.9rem;
+}
+
+.confirmation__item-total {
+  font-size: 0.95rem;
+}
+
+/* Total */
+.confirmation__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  color: var(--color-gray-mid);
+}
+
+.confirmation__total-price {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* Continue Shopping */
+.confirmation__btn {
+  padding: 12px 32px;
+  border: 1px solid var(--color-black);
+  background: var(--color-black);
+  color: var(--color-white);
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.confirmation__btn:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+/* ══ MOBIL ══ */
+@media (max-width: 768px) {
+
+  .confirmation {
+    padding: 40px 16px;
+  }
+
+  .confirmation__title {
+    font-size: 1.5rem;
+  }
+
+  .confirmation__card {
+    padding: 16px;
+  }
+}
