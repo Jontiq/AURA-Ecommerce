@@ -113,12 +113,12 @@ function ProductsPage() {
     // Kategorifilter
     const categoryMatch =
       activeCategory === "All" ||
-      product.categories.includes(activeCategory.toLowerCase());
+      product.categories.includes(activeCategory);
 
     // Notes-filter produkten måste ha ALLA valda notes (görs via every)
     const notesMatch =
       selectedNotes.length === 0 ||
-      selectedNotes.every((note) => product.notes.includes(note.toLowerCase()));
+      selectedNotes.every((note) => product.notes.includes(note));
 
     // Sökfilter kollar namn och brand
     const searchMatch =
@@ -239,7 +239,7 @@ function ProductsPage() {
           <div className="products-grid">
             {filteredProducts.map((product) => (
               <ProductCard
-                key={product.id}
+                key={product._id}
                 product={product}
                 onAddToCart={(p) => console.log("Add to cart:", p)}
               />

@@ -9,7 +9,7 @@ function ProductCard({ product}) {
   const { addToCart } = useCart();
   return (
     // Klickar man på kortet -> ProductDetailPage
-    <Link to={`/products/${product.id}`} className="product-card">
+    <Link to={`/products/${product._id}`} className="product-card">
       {/*BILD*/}
       <div className="product-card__image-wrapper">
         <img
