@@ -52,6 +52,7 @@ function CheckoutPage() {
       }
     }
 
+    //Validera telefonnummer
     if (!form.phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else {
@@ -62,7 +63,7 @@ function CheckoutPage() {
       }
     }
 
-    if (!form.paymentMethod) {
+    if (!paymentMethod) {
       newErrors.paymentMethod = "Please select a payment method";
     }
 
@@ -179,7 +180,7 @@ function CheckoutPage() {
 
             <div className="form-field">
               <div className="form-label-row">
-                <label className="form-label">Street Adress</label>
+                <label className="form-label">Street Address</label>
                 {errors.streetAddress && (
                   <span className="form-error-msg">{errors.streetAddress}</span>
                 )}
