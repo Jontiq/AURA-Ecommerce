@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { loginUser } from "../api";
 import "../styles/AuthPages.css";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth(); //Nu används auth
 
   const [form, setForm] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState(""); //Fel från backend, t.ex. "Invalid credentials"
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +25,7 @@ function LoginPage() {
 
   const validate = () => {
     const newErrors = {};
-    if (!form.email.trim()) newErrors.email = true;
+    if (!form.username.trim()) newErrors.username = true; // nu username istället för email efter ändringen i backend
     if (!form.password.trim()) newErrors.password = true;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -29,8 +34,25 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    // Kopplas till AuthContext och backend senare
-    console.log("Login:", form);
+
+    setLoading(true);
+    setServerError("");
+
+    try {
+      //Anropar backend via api.js
+      const data = await loginUser(form.username, form.password);
+
+      //Sparar token + sätter authed: true via contexten
+      login(data);
+
+      //Skickar användaren till startsidan
+      navigate("/account");
+    } catch (err) {
+      // Backend svarade med ett fel, t.ex. fel lösenord
+      setServerError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,12 +65,12 @@ function LoginPage() {
 
         <form className="auth__form" onSubmit={handleSubmit}>
           <div className="auth__field">
-            <label className="auth__label">Email</label>
+            <label className="auth__label">Username</label>
             <input
-              className={`auth__input ${errors.email ? "auth__input--error" : ""}`}
-              type="email"
-              name="email"
-              value={form.email}
+              className={`auth__input ${errors.username ? "auth__input--error" : ""}`}
+              type="text"
+              name="username"
+              value={form.username}
               onChange={handleChange}
             />
           </div>
@@ -64,14 +86,17 @@ function LoginPage() {
             />
           </div>
 
-          <button type="submit" className="auth__btn">
-            Sign in
+          {/* Visar felmeddelande från backend om inloggning misslyckas */}
+          {serverError && <p className="auth__error">{serverError}</p>}
+
+          <button type="submit" className="auth__btn" disabled={loading}>
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
         <p className="auth__switch">
           Don't have an account?{" "}
-          <Link to="/register" className="auth__switch-link">
+          <Link to="/register" className="auth__link">
             Create one
           </Link>
         </p>

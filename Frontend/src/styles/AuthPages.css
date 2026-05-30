@@ -109,6 +109,12 @@
   text-underline-offset: 2px;
 }
 
+.auth__error {
+  color: var(--color-error); /* eller en röd färg du har i variables.css */
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 /* ══ MOBIL ══ */
 @media (max-width: 768px) {
 

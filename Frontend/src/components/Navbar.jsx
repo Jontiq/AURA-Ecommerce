@@ -7,6 +7,7 @@ import  {User, ShoppingCart, Menu, X} from "lucide-react"; //Hämtar färdiga ik
 
 //Context
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext"; 
 
 function Navbar() {
   // Håller koll på om mobilmenyn är öppen eller stängd
@@ -22,6 +23,7 @@ function Navbar() {
 
   //context
   const { totalItems } = useCart();
+   const { authed } = useAuth();
 
   //Hämtar produkter och filtrerar medan användaren skriver
   useEffect(() => {
@@ -117,11 +119,11 @@ useEffect(() => {
               Discover Collection
             </Link>
             <Link
-              to="/account"
+              to={authed ? "/account" : "/login"}
               className="navbar__dropdown-link"
               onClick={() => setMenuOpen(false)}
             >
-              Account
+              {authed ? "Account" : "Login"}
             </Link>
           </div>
         )}
@@ -155,8 +157,8 @@ useEffect(() => {
             {searchResults.length > 0 ? (
               searchResults.map((product) => (
                 <Link
-                  key={product.id}
-                  to={`/products/${product.id}`}
+                  key={product._id}
+                  to={`/products/${product._id}`}
                   className="navbar__search-result"
                   onClick={handleResultClick}
                 >
@@ -187,7 +189,10 @@ useEffect(() => {
 
       {/* HÖGER, IKONER (KONTO OCH KASSA samt count för hur många artiklar i kassan(just nu hårdkodad till 0)) */}
       <div className="navbar__right">
-        <Link to="/login" className="navbar__icon desktop-only">
+        <Link
+          to={authed ? "/account" : "/login"}
+          className="navbar__icon desktop-only"
+        >
           <User size={24} />
         </Link>
         <Link to="/checkout" className="navbar__icon">
