@@ -42,3 +42,12 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Global error-handler – fångar alla fel som kastas i controllers
+// Utan denna svarar Express med en HTML-sida istället för JSON, så detta bör fixa buggen...
+app.use((err, req, res, next) => {
+  const statusCode = res.statusCode && res.statusCode !== 200 
+    ? res.statusCode 
+    : 500;
+  res.status(statusCode).json({ message: err.message });
+});

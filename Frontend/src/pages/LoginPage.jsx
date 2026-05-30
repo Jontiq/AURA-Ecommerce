@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../api";
@@ -6,7 +6,13 @@ import "../styles/AuthPages.css";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth(); //Nu används auth
+  const { authed, login } = useAuth();
+
+  useEffect(() => {
+    if (authed) {
+      navigate("/account");
+    }
+  }, [authed]);
 
   const [form, setForm] = useState({
     username: "",

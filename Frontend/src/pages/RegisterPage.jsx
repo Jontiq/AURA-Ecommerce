@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { registerUser } from "../api";
 import "../styles/AuthPages.css";
 
+
 function RegisterPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { authed, login } = useAuth();
+
+  useEffect(() => {
+    if (authed) {
+      navigate("/account");
+    }
+  }, [authed]);
 
   const [form, setForm] = useState({
     firstName: "",
