@@ -118,4 +118,39 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, loginUser, getMe };
+//@desc     Toggle product in user's favorites (Add if not present, remove if it is)
+//@route    PUT /api/users/favorites/:productId
+//@access   Private
+const toggleFavorite = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const productId = req.params.productId;
+
+  // Kollar om produkten redan finns i favorites-arrayen
+  const alreadyFavorited = user.favorites.some(
+    (id) => id.toString() === productId
+  );
+
+  if (alreadyFavorited) {
+    // Ta bort – filter behåller allt UTOM det matchande id:t
+    user.favorites = user.favorites.filter(
+      (id) => id.toString() !== productId
+    );
+  } else {
+    // Lägg till
+    user.favorites.push(productId);
+  }
+
+  await user.save();
+
+  res.status(200).json({
+    favorites: user.favorites,
+  });
+});
+
+export { registerUser, loginUser, getMe, toggleFavorite };
