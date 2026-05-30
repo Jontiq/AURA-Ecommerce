@@ -3,12 +3,21 @@ import cors from "cors"; //Cross-Origin Resource Sharing
 import dotenv from "dotenv"; //Hämtar "hemliga" miljövaribler
 import mongoose from "mongoose"; //Kommunicering till mongodb 
 
+//ROUTES
+import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+
 dotenv.config(); //Läser in min .env fil
 
 const app = express(); //Skapar serverinstans
 
 app.use(express.json()); //Omvandlar svar till JSON
 app.use(cors()); //Aktiverar CORS skyddtill app
+//Routes
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Databasanslutningen skapad
 // mongoose.connect() returnerar ett Promise, så vi använder async/await. Lägger här istället för i nån config.
