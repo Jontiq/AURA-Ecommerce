@@ -1,27 +1,34 @@
-//Importerar paketen
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import cors from "cors"; //Cross-Origin Resource Sharing
+import dotenv from "dotenv"; //Hämtar "hemliga" miljövaribler
+import mongoose from "mongoose"; //Kommunicering till mongodb 
 
-//aktiverar dotenv så att vi faktiskt kan läsa från .env filen
-dotenv.config();
+dotenv.config(); //Läser in min .env fil
 
-//Skapar express-app
-const app = express();
+const app = express(); //Skapar serverinstans
 
-//MIDDLEWARE
-//Nedan låter appen läsa JSON i request-bodyn, t.ex. när man skickar in ett formulär, annars hade det inte gått att tolka.
-app.use(express.json());
+app.use(express.json()); //Omvandlar svar till JSON
+app.use(cors()); //Aktiverar CORS skyddtill app
 
-//tillåter react-appen som är en annan port att prata med denna server genom cors
-app.use(cors());
+// Databasanslutningen skapad
+// mongoose.connect() returnerar ett Promise, så vi använder async/await. Lägger här istället för i nån config.
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.CONNECTION_STRING);
+    console.log("MongoDB connected!");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1); //Stänger servern om DB-kopplingen misslyckas
+  }
+};
 
-//test för att bekräfta funktionalitet
-app.get("/", (req,res)=>{
-    res.json({message:"AURA API is running"});
+connectDB(); //Ansluter
+
+// Test-route
+app.get("/", (req, res) => {
+  res.json({ message: "AURA API is running" });
 });
 
-//Startar servern på port 5000 (eller vad .env säger, just nu tom)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
