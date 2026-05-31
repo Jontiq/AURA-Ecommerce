@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import CartItem from "../components/CartItem"; // 👈 Den nya importen
+import CartItem from "../components/CartItem";
 import "../styles/CheckoutPage.css";
+import { useAuth } from "../context/AuthContext";
+import { createOrder } from "../api";
 
 function CheckoutPage() {
-  const { cartItems, removeFromCart, updateQuantity, totalPrice, clearCart } =
-    useCart();
+  const { cartItems, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
+  const { authed } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -77,30 +79,23 @@ function CheckoutPage() {
     if (isCartEmpty) return;
     if (!validate()) return;
 
-    const order = {
-      userId: null,
+    const orderData = {
+      // delivery istället för shipping, matchar Order-modellen
+      delivery: form,
       items: cartItems.map((item) => ({
-        productId: item.id,
+        productId: item._id, // _id istället för id
         name: item.name,
         brand: item.brand,
         price: item.price,
         quantity: item.quantity,
         itemTotal: item.price * item.quantity,
       })),
-      shipping: form,
       paymentMethod,
       orderTotal: totalPrice,
-      createdAt: new Date().toISOString(),
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(order),
-      });
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      const data = await res.json();
+      const data = await createOrder(orderData);
       clearCart();
       navigate("/confirmation", { state: { order: data } });
     } catch (err) {

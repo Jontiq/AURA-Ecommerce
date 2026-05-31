@@ -105,9 +105,15 @@ export async function toggleFavorite(productId) {
 
 // Skapar en order – user kopplas på backend om token finns
 export async function createOrder(orderData) {
+  const token = getToken();
+
   const res = await fetch(`${API_URL}/orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      // Skickar token om användaren är inloggad, annars gästorder
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
     body: JSON.stringify(orderData),
   });
 

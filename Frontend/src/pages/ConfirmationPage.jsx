@@ -42,7 +42,7 @@ function ConfirmationPage() {
         <div className="confirmation__section">
           <span className="confirmation__label">Order Number</span>
           <span className="confirmation__order-number">
-            {formatOrderNumber(order.id)}
+            {formatOrderNumber(order._id)}
           </span>
         </div>
 

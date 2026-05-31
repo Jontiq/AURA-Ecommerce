@@ -90,7 +90,7 @@ function AccountPage() {
                   {/* Order header */}
                   <div className="order-card__header">
                     <span className="order-card__number">
-                      Order #{order._id.slice(-6).toUpperCase()}
+                      Order #{order._id.toUpperCase()}
                     </span>
                     <span className="order-card__date">
                       {formatDate(order.createdAt)}

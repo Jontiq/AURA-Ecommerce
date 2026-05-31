@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Order from "../models/Order.js";
+import jwt from "jsonwebtoken";
 
 //@desc     Create a new order (Supports both logged-in users and guests)
 //@route    POST /api/orders
@@ -19,10 +20,23 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error("Please provide all required order fields");
   }
 
+  // Försöker läsa token om den finns, men kraschar inte om den saknas
+  let userId = null;
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    try {
+      const token = authHeader.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      userId = decoded.user.id;
+    } catch {
+      // Ogiltig token – behandla som gäst
+    }
+  }
+
   // Om användaren är inloggad finns req.user (satt av protect),
   // annars är det ett gästköp och userId blir null
   const order = await Order.create({
-    user: req.user ? req.user.id : null,
+    user: userId,
     delivery,
     items,
     paymentMethod,

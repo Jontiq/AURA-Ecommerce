@@ -12,12 +12,12 @@ function CartItem({ item, updateQuantity, removeFromCart }) {
 
   const handleDecrease = () => {
     if (item.quantity > 1) {
-      updateQuantity(item.id, item.quantity - 1);
+      updateQuantity(item._id, item.quantity - 1);
     }
   };
 
   const handleIncrease = () => {
-    updateQuantity(item.id, item.quantity + 1);
+    updateQuantity(item._id, item.quantity + 1);
   };
 
   return (
@@ -73,14 +73,14 @@ function CartItem({ item, updateQuantity, removeFromCart }) {
                 const num = parseInt(val);
                 if (!isNaN(num) && num >= 1) {
                   setQuantity(num);
-                  updateQuantity(item.id, num); // Uppdaterar context i bakgrunden
+                  updateQuantity(item._id, num); // Uppdaterar context i bakgrunden
                 }
               }}
               onBlur={() => {
                 // Återställ till 1 om fältet lämnas tomt eller ogiltigt
                 if (quantity === "" || quantity < 1) {
                   setQuantity(1);
-                  updateQuantity(item.id, 1);
+                  updateQuantity(item._id, 1);
                 }
               }}
             />
@@ -105,7 +105,7 @@ function CartItem({ item, updateQuantity, removeFromCart }) {
         {/* Delete */}
         <button
           className="cart-item__remove"
-          onClick={() => removeFromCart(item.id)}
+          onClick={() => removeFromCart(item._id)}
           aria-label="Remove item"
         >
           <Trash2 size={18} />

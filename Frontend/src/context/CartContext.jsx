@@ -33,13 +33,13 @@ export function CartProvider({ children }) {
   const addToCart = (product, quantity = 1) => {
     setCartItems((prev) => {
         //Find är en inbyggd metod för att leta igenom en array.
-      const existing = prev.find((item) => item.id === product.id);
+      const existing = prev.find((item) => item._id === product._id);
       //om produkten existerar i cart
       if (existing) {
         //for each product i cart
         return prev.map((item) =>
           //if id matchar
-          item.id === product.id
+          item._id === product._id
             ? //hämta hela item objektet genom ...item, sen säger vi att vi ska uppdatera quantity, och att quantity är item.quantity + quantity
               { ...item, quantity: item.quantity + quantity }
               //gör inget
@@ -54,7 +54,7 @@ export function CartProvider({ children }) {
   // Tar bort produkt helt från cart
   const removeFromCart = (productId) => {
     //prev blir istället cartItems filtrerad baserat på id:t vi skickade in
-    setCartItems((prev) => prev.filter((item) => item.id !== productId));
+    setCartItems((prev) => prev.filter((item) => item._id !== productId));
   };
 
   // Uppdaterar quantity för en specifik produkt
@@ -62,7 +62,7 @@ export function CartProvider({ children }) {
     if (quantity < 1) return;
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === productId ? { ...item, quantity } : item,
+        item._id === productId ? { ...item, quantity } : item,
       ),
     );
   };
