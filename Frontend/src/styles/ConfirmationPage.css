@@ -153,4 +153,8 @@
   .confirmation__card {
     padding: 16px;
   }
+
+  .confirmation__order-number {
+  font-size: 1.1rem;
+}
 }

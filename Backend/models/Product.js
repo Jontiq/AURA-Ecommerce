@@ -17,6 +17,7 @@ export const VALID_NOTES = [
   "Musky",
   "Spicy",
   "Fresh",
+  "Floral"
 ];
 
 const productSchema = new mongoose.Schema({
@@ -24,6 +25,8 @@ const productSchema = new mongoose.Schema({
   brand: { type: String, required: [true, "Please add a brand"] },
   price: { type: Number, required: [true, "Please add a price"] },
   image: { type: String, required: [true, "Please add an image URL"] },
+  description: { type: String, required: [true, "Please add a description"] },
+  volume: { type: Number, required: [true, "Please add a volume"] },
   popular: { type: Boolean, default: false },
 
   categories: {
