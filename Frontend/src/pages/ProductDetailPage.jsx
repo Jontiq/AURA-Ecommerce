@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Heart } from "lucide-react";
 import "../styles/ProductDetailPage.css";
 
 //Context
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import { getMe, toggleFavorite } from "../api"; 
 
 function ProductDetailPage() {
   const { id } = useParams(); //Hämtar produktens ID från URL:en (/products/:id)
@@ -15,8 +17,13 @@ function ProductDetailPage() {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1); // Startar på 1
 
+  // Favorites-state
+  const [isFavorited, setIsFavorited] = useState(false); // Är produkten favoritad?
+  const [showTooltip, setShowTooltip] = useState(false); // Visa tooltip om ej inloggad
+
   //context
   const { addToCart } = useCart();
+  const { authed } = useAuth(); // 👈 NY
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -41,6 +48,39 @@ function ProductDetailPage() {
 
     fetchProduct();
   }, [id]); // Körs om när id i URL:en ändras
+
+  // Om inloggad, kolla om produkten redan är favoritad
+  useEffect(() => {
+    if (!authed) return;
+    const checkFavorite = async () => {
+      try {
+        const user = await getMe();
+        // Kollar om produktens id finns i användarens favorites-array
+        setIsFavorited(user.favorites.includes(id));
+      } catch (err) {
+        console.error("Failed to check favorites:", err.message);
+      }
+    };
+    checkFavorite();
+  }, [authed, id]);
+
+  const handleFavoriteClick = async () => {
+    //Ej inloggad, visa tooltip istället
+    if (!authed) {
+      setShowTooltip(true);
+      // Döljer tooltip automatiskt efter 3 sekunder
+      setTimeout(() => setShowTooltip(false), 3000);
+      return;
+    }
+
+    try {
+      await toggleFavorite(id);
+      // Togglar lokalt state direkt – slipper hämta om hela användaren
+      setIsFavorited((prev) => !prev);
+    } catch (err) {
+      console.error("Failed to toggle favorite:", err.message);
+    }
+  };
 
   // Minskar quantity, men aldrig under 1
   const decreaseQuantity = () => {
@@ -140,13 +180,35 @@ function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Add to cart, anropar metod från context */}
-          <button
-            className="product-detail__add-btn"
-            onClick={() => addToCart(product, quantity)}
-          >
-            Add to cart <ShoppingCart size={18} />
-          </button>
+
+          {/* ── Add to cart + Favorit-knapp ── */}
+          <div className="product-detail__actions">
+            <button
+              className="product-detail__add-btn"
+              onClick={() => addToCart(product, quantity)}
+            >
+              Add to cart <ShoppingCart size={18} />
+            </button>
+
+            {/* Favorit-knapp med tooltip-wrapper */}
+            <div className="product-detail__fav-wrapper">
+              <button
+                className={`product-detail__fav-btn ${isFavorited ? "product-detail__fav-btn--active" : ""}`}
+                onClick={handleFavoriteClick}
+                aria-label="Add to favourites"
+              >
+                {/* Fyllt hjärta om favoritad, tomt annars */}
+                <Heart size={20} fill={isFavorited ? "currentColor" : "none"} />
+              </button>
+
+              {/* Tooltip – visas om ej inloggad */}
+              {showTooltip && (
+                <div className="product-detail__tooltip">
+                  Please log in to add favourites
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* Beskrivning – mobil: under Add to cart */}
           <p className="product-detail__description mobile-description">

@@ -66,7 +66,7 @@ function LoginPage() {
       <div className="auth__container">
         <h1 className="auth__title">Welcome back</h1>
         <p className="auth__subtitle">
-          Sign in to your account to view your placed orders
+          Sign in to your account to view your placed orders and save your favorite perfumes
         </p>
 
         <form className="auth__form" onSubmit={handleSubmit}>

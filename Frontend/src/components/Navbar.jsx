@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 //importerar link för att ha klickbara texter (istället för <a> )
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css"; //Styling
-import  {User, ShoppingCart, Menu, X} from "lucide-react"; //Hämtar färdiga ikoner
+import  {User, ShoppingCart, Menu, X, Heart} from "lucide-react"; //Hämtar färdiga ikoner
 
 //Context
 import { useCart } from "../context/CartContext";
@@ -119,6 +119,13 @@ useEffect(() => {
               Discover Collection
             </Link>
             <Link
+              to="/favorites"
+              className="navbar__dropdown-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Favorites
+            </Link>
+            <Link
               to={authed ? "/account" : "/login"}
               className="navbar__dropdown-link"
               onClick={() => setMenuOpen(false)}
@@ -189,6 +196,9 @@ useEffect(() => {
 
       {/* HÖGER, IKONER (KONTO OCH KASSA samt count för hur många artiklar i kassan(just nu hårdkodad till 0)) */}
       <div className="navbar__right">
+        <Link to="/favorites" className="navbar__icon desktop-only">
+          <Heart size={24} />
+        </Link>
         <Link
           to={authed ? "/account" : "/login"}
           className="navbar__icon desktop-only"

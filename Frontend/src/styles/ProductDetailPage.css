@@ -177,6 +177,73 @@
   color: var(--color-white);
 }
 
+/* ── ACTIONS (Add to cart + Favorit) ── */
+.product-detail__actions {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* Add to cart tar all tillgänglig bredd, favorit-knappen är fast */
+.product-detail__add-btn {
+  flex: 1; /* Växer och fyller utrymmet */
+}
+
+/* ── FAVORIT-KNAPP ── */
+.product-detail__fav-wrapper {
+  position: relative; /* Så tooltip kan positioneras relativt knappen */
+}
+
+.product-detail__fav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-black);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--color-black);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.product-detail__fav-btn:hover {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Fyllt hjärta – aktiv favorit */
+.product-detail__fav-btn--active {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* ── TOOLTIP ── */
+.product-detail__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px); /* Dyker upp ovanför knappen */
+  right: 0;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  white-space: nowrap; /* Texten radbryts inte */
+  pointer-events: none; /* Klick går igenom tooltip */
+  z-index: 10;
+}
+
+/* Liten pil nedåt på tooltip */
+.product-detail__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 16px;
+  border: 6px solid transparent;
+  border-top-color: var(--color-black);
+}
+
 /* Laddning / fel */
 .detail-status {
   text-align: center;

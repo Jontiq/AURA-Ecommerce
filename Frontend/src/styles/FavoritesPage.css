@@ -1,0 +1,49 @@
+.favorites {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.favorites__title {
+  font-family: var(--font-logo);
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.favorites__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.favorites__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 0;
+  color: var(--color-gray-mid);
+}
+
+.favorites__link {
+  color: var(--color-black);
+  text-decoration: underline;
+}
+
+.favorites__status {
+  text-align: center;
+  padding: 64px;
+  color: var(--color-gray-mid);
+}
+
+@media (max-width: 768px) {
+  .favorites__title {
+    font-size: 1.8rem;
+  }
+
+  .favorites__grid {
+    grid-template-columns: 1fr; /* En kolumn på mobil – matchar Figma */
+    gap: 16px;
+  }
+}
