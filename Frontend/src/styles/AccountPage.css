@@ -1,0 +1,141 @@
+.account {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+/* ── HEADER ── */
+.account__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.account__title {
+  font-family: var(--font-logo);
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+.account__signout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-gray);
+  text-decoration: underline;
+}
+
+.account__signout:hover {
+  color: var(--color-black);
+}
+
+/* ── INNEHÅLL ── */
+.account__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Två kolumner på desktop */
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── SEKTIONER ── */
+.account__section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* ── PROFILKORT ── */
+.account__card {
+  border: 1px solid var(--color-gray-light);
+  background-color: var(--color-white);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account__label {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+}
+
+.account__value {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ── ORDERKORT ── */
+.account__orders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.account__empty {
+  color: var(--color-gray);
+}
+
+.order-card {
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.order-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.order-card__number {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.order-card__date {
+  font-size: 0.85rem;
+  color: var(--color-gray);
+}
+
+.order-card__items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.order-card__item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
+
+.order-card__footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-gray-light);
+  font-weight: 600;
+}
+
+/* ── MOBIL ── */
+@media (max-width: 768px) {
+  .account__content {
+    grid-template-columns: 1fr; /* En kolumn på mobil */
+  }
+
+  .account__title {
+    font-size: 1.8rem;
+  }
+}

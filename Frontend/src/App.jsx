@@ -17,11 +17,12 @@ import AccountPage from "./pages/AccountPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from "./components/ProtectedRoute"; //Auth
 
 function App() {
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Navbar />
       {/* global.css sätter #root till display: flex; flex-direction: column; min-height: 100vh. 
       Det betyder att Navbar, main och Footer staplas vertikalt. 
@@ -35,7 +36,14 @@ function App() {
           <Route path="/confirmation" element={<ConfirmationPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <AccountPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
       <Footer />
