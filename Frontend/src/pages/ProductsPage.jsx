@@ -3,20 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import "../styles/ProductsPage.css";
 
-//Alla tillgängliga notes i dropdown
-const ALL_NOTES = [
-  "Lavender",
-  "Citrus",
-  "Woody",
-  "Sweet",
-  "Rose",
-  "Vanilla",
-  "Jasmine",
-  "Sandalwood",
-  "Bergamot",
-  "Amber",
-];
-
 const CATEGORIES = ["All", "Women", "Men", "Unisex"];
 
 function ProductsPage() {
@@ -24,6 +10,8 @@ function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //Alla tillgängliga notes i dropdown
+  const [allNotes, setAllNotes] = useState([]);
 
   // Filter-state
   const [activeCategory, setActiveCategory] = useState("All");
@@ -38,6 +26,22 @@ function ProductsPage() {
   const noteParam = searchParams.get("note") || "";
 
   const notesRef = useRef(null);
+
+  // Hämta meta-data från backend
+  useEffect(() => {
+    const fetchMeta = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/products/meta`,
+        );
+        const data = await res.json();
+        setAllNotes(data.notes);
+      } catch (err) {
+        console.error("Failed to fetch meta:", err.message);
+      }
+    };
+    fetchMeta();
+  }, []);
 
   //För att stänga notesdropdown om man klickar utanför
   useEffect(() => {
@@ -61,13 +65,13 @@ function ProductsPage() {
   }, [categoryParam]);
 
   useEffect(() => {
-    if (noteParam) {
-      const match = ALL_NOTES.find(
+    if (noteParam && allNotes.length > 0) {
+      const match = allNotes.find(
         (n) => n.toLowerCase() === noteParam.toLowerCase(),
       );
       if (match) setSelectedNotes([match]);
     }
-  }, [noteParam]);
+  }, [noteParam, allNotes]);
 
   // Hämtar produkter från json-server
   useEffect(() => {
@@ -112,8 +116,7 @@ function ProductsPage() {
   const filteredProducts = products.filter((product) => {
     // Kategorifilter
     const categoryMatch =
-      activeCategory === "All" ||
-      product.categories.includes(activeCategory);
+      activeCategory === "All" || product.categories.includes(activeCategory);
 
     // Notes-filter produkten måste ha ALLA valda notes (görs via every)
     const notesMatch =
@@ -191,7 +194,7 @@ function ProductsPage() {
             {/*Dropdown-lista*/}
             {notesOpen && (
               <div className="notes-dropdown__menu">
-                {ALL_NOTES.map((note) => (
+                {allNotes.map((note) => (
                   <label key={note} className="notes-dropdown__item">
                     <input
                       type="checkbox"

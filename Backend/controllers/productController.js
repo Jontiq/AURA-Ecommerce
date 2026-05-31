@@ -23,4 +23,14 @@ const getProductById = asyncHandler(async (req, res) => {
   res.status(200).json(product);
 });
 
-export { getProducts, getProductById };
+
+//@desc     Get all valid filter values/metadata for products
+//@route    GET /api/products/meta
+//@access   Public
+const getProductMeta = asyncHandler(async (req, res) => {
+  // Importerar konstanterna direkt från modellen
+  const { VALID_NOTES, VALID_CATEGORIES } = await import("../models/Product.js");
+  res.status(200).json({ notes: VALID_NOTES, categories: VALID_CATEGORIES });
+});
+
+export { getProducts, getProductById, getProductMeta };

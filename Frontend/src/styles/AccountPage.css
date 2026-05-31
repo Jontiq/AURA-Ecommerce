@@ -93,8 +93,8 @@
 
 .order-card__header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
   margin-bottom: 16px;
 }
 
@@ -104,8 +104,9 @@
 }
 
 .order-card__date {
+  display: block;
   font-size: 0.85rem;
-  color: var(--color-gray);
+  color: var(--color-gray-mid);
 }
 
 .order-card__items {
@@ -132,8 +133,12 @@
 
 /* ── MOBIL ── */
 @media (max-width: 768px) {
+  .account {
+    padding: 32px 16px;
+  }
+
   .account__content {
-    grid-template-columns: 1fr; /* En kolumn på mobil */
+    grid-template-columns: 1fr;
   }
 
   .account__title {
