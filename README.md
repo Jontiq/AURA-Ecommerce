@@ -30,7 +30,6 @@ FULLSTACK-AURAECOMMERCE/
 │   ├── models/
 │   ├── routes/
 │   └── data/          # Seed script
-├── docs/              # Figma design link
 └── package.json       # Root – runs both servers
 
 ---
@@ -80,7 +79,7 @@ npm run seed
 
 ### Login
 
-A hardcoded test account is available after seeding:
+A test account is available after seeding:
 Username: user
 Password: password
 
@@ -100,7 +99,7 @@ npm run dev
 [View Figma Design](https://www.figma.com/design/M04oUQXZcHgrCeg09GLMPb/AURA---DesignSystem?node-id=1-30&p=f)
 
 ## GitHub Repository
-[View Repository](https://github.com/your-username/your-repo-name)
+[View Repository](https://github.com/Jontiq/AURA-Ecommerce.git)
 
 ---
 
