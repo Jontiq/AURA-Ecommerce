@@ -44,17 +44,19 @@ FULLSTACK-AURAECOMMERCE/
 ### Clone the repo
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
-cd FULLSTACK-AURAECOMMERCE
+cd AURA-Ecommerce
 ```
 
 ### Environment Variables
 
 Create a `.env` file in the `Backend/` folder:
-PORT=5000
-CONNECTION_STRING=your_mongodb_connection_string
-ACCESS_TOKEN_SECRET=your_secret_key
+
+PORT=5000  
+CONNECTION_STRING=your_mongodb_connection_string  
+ACCESS_TOKEN_SECRET=your_secret_key  
 
 Create a `.env` file in the `Frontend/` folder:
+
 VITE_API_URL=http://localhost:5000/api
 
 ### Install Dependencies
